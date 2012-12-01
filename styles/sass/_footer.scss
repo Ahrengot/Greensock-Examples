@@ -1,0 +1,20 @@
+/******************************************************************
+FOOTER STYLES
+******************************************************************/
+
+#container > footer {
+	margin-top: 3em;
+	padding-bottom: 5em;
+	color: invert($text-color);
+	text-align: center;
+
+	p { 
+		font-size: 1.15em; 
+		font-weight: bold;
+		margin-bottom: 0.3em; 
+		text-shadow: 0 1px 1px rgba(white, 0.1);
+	}
+	
+	a { color: desaturate($link-color, 80%); }
+	small { color: #555; }
+}

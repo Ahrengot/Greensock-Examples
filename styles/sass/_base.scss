@@ -1,0 +1,44 @@
+/******************************************************************
+GENERAL STYLES
+******************************************************************/
+html, body, #container { min-height: 100%; }
+
+#container {
+	background: #302525;
+	@include background-image(linear-gradient(#302525, #221919));
+}
+
+#container { padding: 2em; }
+
+/******************************************************************
+LOGO
+******************************************************************/
+#container > header {
+	margin-bottom: 2em;
+	h1 { @include squish-text(); }
+}
+
+/******************************************************************
+LINK STYLES
+******************************************************************/
+
+a, a:active, a:visited { color: $link-color; text-decoration: none; }
+a:hover { color: $link-hover-color; text-decoration: underline; }
+
+/******************************************************************
+H1, H2, H3, H4, H5, H6 STYLES
+******************************************************************/
+#{headers()} {
+	color: $text-color;
+	line-height: 1.1em;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+
+
+	&.inverted { 
+		color: invert($text-color);
+		text-shadow: 0 -1px 1px rgba(black, 0.5);
+	}
+}
+
+#{headers(3,6)} { font-size: 100%; }

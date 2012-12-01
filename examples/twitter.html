@@ -1,0 +1,191 @@
+<!doctype html>
+<html class="no-js" lang="en-US">
+<head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	<title>Tweets</title>
+  
+  	<link rel="stylesheet" href="styles/css/reset.css">
+  	<style type="text/css">
+  		
+  		#main { width: 80%; margin: 30px auto 0; }
+
+  		.number { 
+			text-rendering: optimizeLegibility;
+			font: bold 15em/0.8 'Cochin', serif; 
+			letter-spacing: -8px; 
+			color: #5ed9ef; 
+			margin: 10px 0;
+		}
+
+		form { margin: 25px 0 0; font-size: 2em; }
+
+		input[type="search"] {
+			height: 50px;
+			width: 60%;
+
+			padding-left: 10px;
+			border-radius: 5px 0 0 5px;
+			border: none;
+			outline: none;
+			background: #ddd;
+		}
+
+		input[type="search"]:focus { background: #e5e5e5; }
+
+		button {
+			width: 30%;
+			height: 53px;
+			border-radius: 0 5px 5px 0;
+			border: none;
+			background: #85d547;
+		}
+
+		button:hover { background: #80bd51; }		
+
+		#tweets { margin: 50px 0; }
+
+		.tweet {
+			position: relative;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-color: #eee;
+			border: thin solid #ccc;
+			
+			width: 250px; height: 250px;
+			border-radius: 125px;
+			
+			padding: 50px;
+			margin: 5px 0 0 5px;
+			box-sizing: border-box;
+
+			float: left;
+			text-align: center;
+		}
+
+		.tweet:hover {
+			z-index: 999;
+		}
+
+		.tweet .user { font-weight: bold; }
+		.tweet .user img, .tweet .user p { display: inline-block; }
+		.tweet .user img { margin-right: 5px; }
+  	</style>
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="main" role="main">
+			<header>
+				<h1>Tweets</h1>
+				<p>Input a query below</p>
+			</header>
+
+			<form action="" id="query">
+				<input type="search" placeholder="Search twitter for...">
+				<button>Search!</button>
+			</form>
+
+			<div id="tweets">
+				
+			</div>
+		</div>
+	</div> <!-- eo #container -->
+
+
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.js"></script>
+  	<script>window.jQuery || document.write("<script src='js/libs/jquery-1.8.1.min.js'>\x3C/script>")</script>
+  	<script src="js/gs/TweenMax.min.js"></script>
+
+	<script type="text/javascript">
+		CSSPlugin.defaultTransformPerspective = 500;
+
+		var $form		= $('#query'),
+			$tweetsWrap	= $('#tweets'),
+			tweets;
+
+		function searchTwitter(e) {
+			e.preventDefault();
+			var query = $('input[type="search"]').val();
+			if (!query) return;
+			$.getJSON('http://search.twitter.com/search.json?callback=?&q=' + query, validate);
+		}
+
+		function validate(result) {
+			if (result.results.length < 1) {
+				alert('Nothing matched your query. Try again.');
+				return;
+			}
+
+			tweets = $.map(result.results, function(tweet) {
+				return {
+					id: tweet.id_str,
+					text: tweet.text, 
+					avatar: tweet.profile_image_url, 
+					user: tweet.from_user
+				};
+			});
+
+			renderTweets();
+		}
+
+		function renderTweets() {
+			$tweetsWrap.empty();
+
+			for (var i = 0; i < tweets.length; i++) {
+				var tweet	= tweets[i];
+					
+				var html = '<div class="tweet">';
+				html +=  '<p>' + tweet.text + '</p>';
+				html +=  '<div class="user"><img src="' + tweet.avatar + '" width="30"><p>' + tweet.user + '</p>';
+				html += '</div>';
+
+				$tweetsWrap.append($(html));
+			};
+
+			// Animate tweets in
+			var delay	= 0,
+				stagger = 0.2,
+				$tweets	= $tweetsWrap.find('.tweet');
+
+			$tweets.each(function() {
+				delay += stagger;
+
+				TweenMax.from($(this), 2, {
+					css: {
+						z: 500, 
+						alpha: 0,
+						backgroundColor: 'rgba(' + rand(255) + ', ' + rand(255) + ', ' + rand(255) + ')'
+					},
+					delay: delay,
+					ease: Elastic.easeOut
+				});
+			});
+
+			setTimeout(function() {
+				$tweetsWrap.on('mouseenter mouseleave', '.tweet', function(e) {
+					var css = {z: 0, scale: 1, backgroundColor: '#eee', boxShadow: 'none'};
+					if (e.type == 'mouseenter') {
+						css.scale = 1.5;
+						css.backgroundColor = '#fff';
+						css.boxShadow = '0 0 35px rgba(33,33,33,0.5)';
+					}
+
+					TweenMax.to($(this), 0.7, {css: css, ease:Back.easeOut});
+				});
+			}, (delay + 2) * 1000);
+		}
+
+		function rand(max) {
+			return parseInt(Math.random() * max, 10);
+		}
+
+		$form.on('submit', searchTwitter);
+	</script>
+</body>
+</html>

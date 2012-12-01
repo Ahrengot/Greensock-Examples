@@ -1,0 +1,152 @@
+<!doctype html>
+<html class="no-js" lang="en-US">
+<head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	<title>HTML5 Canvas</title>
+  
+  	<link rel="stylesheet" href="styles/css/reset.css">
+  	<style type="text/css">
+  		
+  		#main { margin: 0; }
+  		header { 
+  			position: absolute; 
+  			width: 100%;
+  			top: 20px;
+  			text-align: center; 
+  			color: 333; 
+  		}
+
+  	</style>
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="main" role="main">
+			<header>
+				<h1>HTML5 Canvas</h1>
+				<p>Paint using your mouse or by touching the screen</p>
+			</header>
+
+			<canvas id="canvas" width="100px" height="100px">
+				You browser does not support HTML5 canvas.
+			</canvas>
+		</div>
+	</div> <!-- eo #container -->
+
+
+  	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js"></script> -->
+  	<script>window.jQuery || document.write("<script src='js/libs/jquery-1.8.2.min.js'>\x3C/script>")</script>
+  	<script src="js/gs/TweenMax.min.js"></script>
+
+	<script type="text/javascript">
+		/**
+		 * HTML5 canvas magic
+		 */
+		var canvasView = {
+			canvas: $('#canvas')[0],
+			ctx: this.canvas.getContext('2d'),
+			mousePos: { x: window.innerWidth >> 1, y: window.innerHeight >> 1 },
+			colors: {red:Math.random() * 255, green: Math.random() * 255, blue: Math.random() * 255},
+			lineWidth: 1,
+			polygonRadius: 40,
+			draw: function(e) {
+				var ctx			= canvasView.ctx,
+					red			= parseInt(canvasView.colors.red, 10),
+					green		= parseInt(canvasView.colors.green, 10),
+					blue		= parseInt(canvasView.colors.blue, 10),
+					rgba		= 'rgba(' + red + ', ' + green + ', ' + blue + ', 0.7);',
+					radius		= parseInt(canvasView.polygonRadius, 10)
+					mousePos	= canvasView.mousePos; 
+
+				ctx.strokeStyle = rgba;
+				ctx.fillStyle = rgba;
+
+				ctx.beginPath();
+				ctx.moveTo(mousePos.x, mousePos.y);
+				ctx.lineTo(mousePos.x - (Math.round(Math.random() * radius - radius * 0.5)), mousePos.y - (Math.round(Math.random() * radius - radius * 0.5)));
+				ctx.lineTo(mousePos.x - (Math.round(Math.random() * radius - radius * 0.5)), mousePos.y - (Math.round(Math.random() * radius - radius * 0.5)));
+				ctx.lineTo(mousePos.x - (Math.round(Math.random() * radius - radius * 0.5)), mousePos.y - (Math.round(Math.random() * radius - radius * 0.5)));
+				ctx.closePath();
+				
+
+				// Half the time output a filled shape, half the time output an outlined shape.
+				(Math.random() > 0.5)? ctx.fill() : ctx.stroke();
+			}
+		}
+
+		/**
+		 * Set canvas size to match browser size
+		 */
+		canvasView.canvas.width = window.innerWidth;
+		canvasView.canvas.height = window.innerHeight;
+
+		/**
+		 * Bind mouse and touch events
+		 */
+		$(document).on('mousemove', function(e) {
+			canvasView.mousePos.x = e.offsetX;
+			canvasView.mousePos.y = e.offsetY;
+		});
+
+		$(document).on('mousedown', function() {
+			resetColors();
+			canvasView.draw();
+			
+			TweenLite.ticker.addEventListener('tick', canvasView.draw);
+		});
+
+		$(document).on('mouseup', function() {
+			isRunning = false;
+
+			TweenLite.ticker.removeEventListener('tick', canvasView.draw);
+		});
+
+		
+		$(document).on("touchmove", function(e) {
+			canvasView.mousePos.x = e.touches[0].pageX;
+			canvasView.mousePos.y = e.touches[0].pageY;
+			
+			fingers = e.touches.length;
+		});
+		
+		$(document).on('touchstart', function(e) {
+			e.preventDefault();
+			resetColors();
+			
+			canvasView.mousePos.x = e.touches[0].pageX;
+			canvasView.mousePos.y = e.touches[0].pageY;
+			
+			canvasView.draw();
+			TweenLite.ticker.addEventListener('tick', canvasView.draw);
+		});
+		
+		$(document).on('touchend', function(e) {
+			if (e.touches.length < 1) {
+				isRunning = false;
+				TweenLite.ticker.removeEventListener('tick', canvasView.draw);
+			}
+		});
+
+		/**
+		 * Animation
+		 */
+		function resetColors() {
+			canvasView.colors = {
+				red:Math.random() * 255, 
+				green: Math.random() * 255, 
+				blue: Math.random() * 255
+			};
+
+			TweenMax.to(canvasView.colors, 1, {red: Math.random() * 100, green: Math.random() * 100, blue: Math.random() * 100, repeat: -1, yoyo: true});
+		}
+
+		TweenMax.to(canvasView, 1, {polygonRadius: window.innerWidth * 0.2, repeat: -1, yoyo: true});
+	</script>
+</body>
+</html>

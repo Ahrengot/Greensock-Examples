@@ -1,0 +1,101 @@
+/******************************************************************
+FILTER NAVIGATION
+******************************************************************/
+nav.filter {
+	font: 13px/1 $font-normal;
+	margin: 0 0 2em;
+	padding: 0 0 1.5em;
+	clear: both;
+
+	border-bottom: thin solid black;
+	@include box-shadow(0 1px 0 rgba(white, 0.1));
+
+
+	.label { font-size: 1.2em; margin-bottom: 0; }
+	.label:after { content: ':'; }
+
+	ul {
+		position: relative;
+		top: 10px;
+
+		li {
+			float: left;
+			border: thin solid #555;
+			padding: 0;
+			color: #555960;
+			text-shadow: 0 1px 0 white;
+			font-weight: 500;
+			
+			background: #F9F9F9;
+			@include filter-gradient(#F9F9F9, #EAEAEA);
+			@include background-image(linear-gradient(#F9F9F9, #EAEAEA));
+			@include box-shadow(0 1px 1px rgba(#000, 0.1));
+			@include transition(all 0.2s ease-out);
+			@extend .no-select;
+			
+			&:hover {
+				@include filter-gradient(lighten(#F9F9F9, 5%), #EAEAEA);
+				@include background-image(linear-gradient(lighten(#F9F9F9, 5%),#EAEAEA));
+			}
+
+			&:active {
+				@include filter-gradient(#EAEAEA, lighten(#F9F9F9, 5%));
+				@include background-image(linear-gradient(#EAEAEA, lighten(#F9F9F9, 5%)));
+			}
+			
+			&:not(:last-child) { border-right: none; }
+			&:first-child { @include border-radius(3px 0 0 3px); }
+			&:last-child { @include border-radius(0 3px 3px 0); }
+			
+			&.current {
+				@include filter-gradient(lighten($primary, 2%), $primary);
+				@include background-image(linear-gradient(lighten($primary, 2%), $primary));
+				@include box-shadow (inset 0 1px 1px rgba(black, 0.3), inset 0 -1px 1px rgba(white, 0.3));
+				@include transition(none);
+				color: white;
+				text-shadow: 0 1px 1px rgba(black, 0.35);
+			}
+			
+			a {
+				display: block;
+				padding: 6px 12px;
+				color: inherit; 
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+/******************************************************************
+BUTTONS, LABELS, ALERTS ETC...
+******************************************************************/
+
+.btn {
+	position: relative;
+	display: inline-block;
+	background-color: $primary;
+	@include box-shadow(0 1px 3px rgba(black, 0.6));
+	@include transition(background-color 0.15s ease-out);
+
+	color: white;
+	text-shadow: 0 -1px 1px rgba(black, 0.5);
+	text-transform: uppercase;
+
+	padding: 8px 23px;
+	margin-left: 4px; margin-right: 4px;
+
+	&:hover {
+		color: white;
+		text-decoration: none;
+		background-color: darken($primary, 4%);
+	}
+
+	&:active {
+		@include box-shadow(0 0 2px rgba(black, 0.8));
+		top: 2px;
+	}
+
+	&:visited {
+		color: white;
+	}
+}

@@ -1,0 +1,112 @@
+<!doctype html>
+<html class="no-js" lang="en-US">
+<head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	<title>Counter</title>
+  
+  	<link rel="stylesheet" href="styles/css/reset.css">
+  	<style type="text/css">
+  		
+  		body { 
+  			background: #222;
+  			color: white;
+  		}
+  		
+  		header, #main { width: 384px; margin: 30px auto; text-align: center; }
+
+  		.number { 
+			text-rendering: optimizeLegibility;
+			font: bold 15em/0.8 'Cochin', serif; 
+			letter-spacing: -8px; 
+			color: #85d547; 
+			margin: 10px 0;
+		}
+
+		form { margin: 25px 0 0; font-size: 2em; font-weight: bold; }
+
+		input[type="number"] {
+			height: 50px;
+			width: 60%;
+			font-weight: bold;
+			padding-left: 20px;
+			border-radius: 5px 0 0 5px;
+			border: none;
+			outline: none;
+			background: #ddd;
+		}
+
+		input[type="number"]:focus { background: white; }
+
+		button {
+			width: 30%;
+			height: 53px;
+			border-radius: 0 5px 5px 0;
+			border: none;
+			background: #85d547;
+		}
+
+		button:hover { background: #80bd51; }
+
+  	</style>
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="main" role="main">
+			<header>
+				<h1>Counter</h1>
+				<p>Animating numbers</p>
+			</header>
+
+			<section id="canvas">
+				<p class="number"></p>
+				<form action="" id="number-input">
+					<input type="number" value="2500">	
+					<button id="animate">Animate</button>
+				</form>
+			</section>
+		</div>
+	</div> <!-- eo #container -->
+
+
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.js"></script>
+  	<script>window.jQuery || document.write("<script src='js/libs/jquery-1.8.1.min.js'>\x3C/script>")</script>
+  	<script src="js/gs/TweenMax.min.js"></script>
+
+	<script type="text/javascript">
+		var $text	= $('p.number'),
+			$input	= $('input[type=number]'),
+			endVal	= 0,
+			currVal	= 0,
+			obj		= {};
+			
+
+		obj.getTextVal = function() {
+			return parseInt(currVal, 10);
+		};
+
+		obj.setTextVal = function(val) {
+			currVal = parseInt(val, 10);
+			$text.text(currVal);
+		};
+
+		obj.setTextVal(0);
+
+		var animate = function(e) {
+			e.preventDefault();
+			currVal = obj.getTextVal();
+			endVal = parseInt($input.val(), 10);
+
+			TweenLite.to(obj, 7, {setTextVal: endVal, ease: Power2.easeInOut});
+		};
+
+		$('#number-input').on('submit', animate);
+	</script>
+</body>
+</html>

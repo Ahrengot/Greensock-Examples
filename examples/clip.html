@@ -1,0 +1,93 @@
+<!doctype html>
+<html class="no-js" lang="en-US">
+<head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	<title>Clip</title>
+  
+  	<link rel="stylesheet" href="styles/css/reset.css">
+  	<style type="text/css">
+  		
+  		body { 
+  			background: #222;
+  			color: white;
+  		}
+  		
+  		header, #main { width: 302px; margin: 30px auto; text-align: center; }
+
+  		#gallery {
+			position: relative;
+		}
+
+		#gallery a {
+			display: block;
+			position: absolute;
+			width: 100px; height: 100px;
+			margin: -50px 0 0 -50px;
+			clip: rect(50px 150px 150px 50px);
+		}
+
+		#gallery a:hover {
+			z-index: 999;
+		}
+
+		a.two { left: 101px; }
+		a.three { left: 202px; }
+		a.four { top: 101px; }
+		a.five { top: 101px; left: 101px; }
+		a.six { top: 101px; left: 202px; }
+		a.seven { top: 202px; }
+		a.eight { top: 202px; left: 101px; }
+		a.nine { top: 202px; left: 202px; }
+
+  	</style>
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="main" role="main">
+			<header>
+				<h1>Masking with 'clip'</h1>
+				<p>Hover over the thumbnails...</p>
+			</header>
+
+			<section id="gallery">
+				<a class="one" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/1"></a>
+				<a class="two" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/2"></a>
+				<a class="three" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/3"></a>
+				<a class="four" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/4"></a>
+				<a class="five" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/5"></a>
+				<a class="six" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/6"></a>
+				<a class="seven" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/7"></a>
+				<a class="eight" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/8"></a>
+				<a class="nine" href="JavaScript:void(0);"><img src="http://lorempixel.com/250/250/nightlife/9"></a>
+			</section>
+		</div>
+	</div> <!-- eo #container -->
+
+
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.js"></script>
+  	<script>window.jQuery || document.write("<script src='js/libs/jquery-1.8.1.min.js'>\x3C/script>")</script>
+  	<script src="js/gs/TweenMax.min.js"></script>
+
+	<script type="text/javascript">
+		function toggleImage(e) {
+			var rect	= 'rect(50px 150px 150px 50px)';
+			
+			if (e.type === 'mouseenter') rect = 'rect(45px 160px 160px 45px)';
+
+			TweenLite.to($(this), 0.5, {css: {clip: rect}, ease:Elastic.easeOut});
+		}
+
+
+		TweenMax.allFrom($('#gallery a'), 1, {css: {clip: 'rect(100px 100px 100px 100px)'}, delay: 1}, 0.08, function() {
+			$('#gallery').on('mouseenter mouseleave', 'a', toggleImage);
+		});
+	</script>
+</body>
+</html>

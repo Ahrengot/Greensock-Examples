@@ -1,0 +1,58 @@
+/* ==|== media queries ======================================================
+ PLACEHOLDER Media Queries for Responsive Design.
+ These override the primary ('mobile first') styles
+ Modify as content requires.
+ ========================================================================== */
+
+@media only screen and (min-width: 320px) {
+	ul.gallery li { width: 100%; margin-left: 0; }
+}
+
+@media only screen and (min-width: 480px) {
+	ul.gallery li { width: 48%; margin-left: 2%; }
+}
+
+@media only screen and (min-width: 768px) {
+	ul.gallery li { width: 32.2%; margin-left: 1%; }
+	nav.filter {
+		.label, ul { display: inline-block; }
+		.label:after { content: none; }
+		ul { margin-left: 1em; }
+	}
+}
+
+@media only screen and (min-width: 1100px) {
+	ul.gallery li { width: 24%; margin-left: 1%; }
+	body { font-size: 15px; }
+}
+
+@media only screen and (min-width: 1500px) {
+	ul.gallery li { width: 19%; margin-left: 1%; }
+}
+
+
+
+/******************************************************************
+PRINT STYLES
+******************************************************************/
+
+@media print {
+	* { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important;
+		-ms-filter: none !important; } 
+		a, a:visited { color: #444 !important; text-decoration: underline; }
+		a[href]:after { content: " (" attr(href) ")"; }
+		abbr[title]:after { content: " (" attr(title) ")"; }
+		.ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  
+		pre { border: 1px solid #999; page-break-inside: avoid; }
+		thead { display: table-header-group; } 
+		tr, img { page-break-inside: avoid; }
+		@page { margin: 0.5cm; }
+		p, h2, h3 { orphans: 3; widows: 3; }
+		h2, h3{ page-break-after: avoid; }
+		
+	/* Sections we don't need */
+	#respond, #site-footer, #site-header { display: none; }
+	
+	/* Links we don't need */
+	article[id*=comment-] .comment-meta a { display: none; }
+}

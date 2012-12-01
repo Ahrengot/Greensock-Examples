@@ -1,0 +1,33 @@
+/******************************************************************
+EXAMPLES GALLERY
+******************************************************************/
+
+ul.gallery {
+	margin: 1em 0 0 -1%;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+
+	li {
+		list-style: none;
+		width: 30%;
+		float: left;
+		margin-left: 1%;
+		margin-bottom: 3%;
+		
+		#{headers()} {
+			font-smooth: always;
+			font-size: 1.15em;
+			margin: 0.6em 0 0;
+			text-shadow: 0 0 2px black;
+			font-weight: bold;
+		}
+
+		p { margin: 0.3em 0 0; }
+
+		a {
+			@include transition(color 0.2s ease-out);
+			&:hover { text-decoration: none; }
+		}
+	}
+}

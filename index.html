@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width">
+	
+	<title>Greensock JavaScript examples gallery</title>
+	
+	<link rel="stylesheet" href="styles/css/combined.css" type="text/css">
+</head>
+
+<body>
+	<div id="container">
+		<header>
+			<h1>
+				Greensock JavaScript examples gallery
+				<img src="http://placehold.it/1860x360/71b200/000000&text=Header+Graphics+Placeholder" alt="Greensock JavaScript examples gallery" width="100%">
+			</h1>
+		</header>
+		
+		<div role="main">
+			<nav class="filter clearfix">
+				<h3 class="label">Filter examples</h3>
+				<ul>
+					<li class="current">
+						<a href="JavaScript:void(0);" title="Show everything" data-filter="*">
+							Everything
+						</a>
+					</li>
+					<li>
+						<a href="JavaScript:void(0);" title="Show only basic examples" data-filter="basic">
+							Basic
+						</a>
+					</li>
+					<li>
+						<a href="JavaScript:void(0);" title="Show only advanced examples" data-filter="advanced">
+							Advanced
+						</a>
+					</li>
+				</ul>
+			</nav>
+
+			<ul class="gallery">
+				<li class="example basic">
+					<a href="examples/3d-flip.html" title="View example">
+						<img src="http://placehold.it/500x360" alt="3D flip example" width="100%">
+						<h3>3D flipping gallery</h3>
+						<p>View example</p>
+					</a>
+				</li>
+				<li class="example advanced">
+						<div class="img-wrap"></div>
+					<a href="examples/canvas.html" title="View example">
+						<img src="http://placehold.it/500x360" alt="Canvas example" width="100%">
+						<h3>Canvas shapes</h3>
+						<p>View example</p>
+					</a>
+				</li>
+				<li class="example basic">
+						<div class="img-wrap"></div>
+					<a href="examples/clip.html" title="View example">
+						<img src="http://placehold.it/500x360" alt="CSS Clip example" width="100%">
+						<h3>CSS Clip</h3>
+						<p>View example</p>
+					</a>
+				</li>
+				<li class="example basic">
+						<div class="img-wrap"></div>
+					<a href="examples/counter.html" title="View example">
+						<img src="http://placehold.it/500x360" alt="Counter example" width="100%">
+						<h3>Animating numbers</h3>
+						<p>View example</p>
+					</a>
+				</li>
+				<li class="example advanced">
+						<div class="img-wrap"></div>
+					<a href="examples/twitter.html" title="View example">
+						<img src="http://placehold.it/500x360" alt="Twitter search example" width="100%">
+						<h3>Twitter search</h3>
+						<p>View example</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+		<footer>
+			<p>Thanks for trying out the Greensock Animation Platform!</p>
+			<small><a href="http://www.greensock.com/get-started-js/" title="http://www.greensock.com/get-started-js/">Getting started</a> / <a href="http://api.greensock.com/js/" target="_blank">Documentation</a> / <a href="http://www.greensock.com/club/" target="_blank">Club Greensock</a></small>
+		</footer>
+	</div> <!-- eo #container -->
+
+	<script src="js/libs/jquery-1.8.2.min.js"></script>
+	<script src="js/libs/underscore-min.js"></script>
+	<script src="js/libs/backbone-min.js"></script>
+	<script src="js/filter.js"></script>
+
+	<script type="text/javascript">
+		var filter = new Filter();
+	</script>
+</body>
+</html>
